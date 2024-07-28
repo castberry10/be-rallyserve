@@ -1,27 +1,25 @@
-const Joi = require('joi');
-// const User = require('../../models/user');
-
+import Joi from 'joi';
+// import User from '../../models/user';
 
 /*
 POST /api/auth/register
 {
-username: 'A',
-password" 'B'
+  username: 'A',
+  password: 'B'
 }
 */
 
-exports.register = async ctx => {
+export const register = async ctx => {
 };
 
-exports.login = async (ctx) => {
+export const login = async ctx => {
 };
 
-exports.check = async ctx => {
+export const check = async ctx => {
 };
 
 /*
 POST /api/auth/logout
 */
-exports.logout = async ctx => {
+export const logout = async ctx => {
 };
-
