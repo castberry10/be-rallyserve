@@ -21,6 +21,6 @@ export const login = async ctx => {
 /*
 POST /api/auth/logout
 */
-export const logout = async ctx => {
+// export const logout = async ctx => {
 
-};
+// };
