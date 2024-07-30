@@ -4,9 +4,9 @@ dotenv.config();
 import cookie from 'koa-cookie';
 import Koa from 'koa';
 import Router from 'koa-router';
-import api from './api';
+import api from './api/index.js';
 import bodyParser from 'koa-bodyparser';
-import { sequelize } from './models';
+import db from './models/index.js';
 // import jwtMiddleware from './lib/jwtMiddleware.js';
 
 const { PORT } = process.env;
@@ -19,9 +19,9 @@ router.use('/api', api.routes()); // api 라우트
 
 // 라우터 적용 전 적용
 app.use(bodyParser());
-app.use(jwtMiddleware);
-app.use(cookie());
-sequelize.sync({ force: true })
+// app.use(jwtMiddleware);
+// app.use(cookie());
+db.sequelize.sync({ force: true })
     .then(() => {
         console.log('데이터베이스 연결됨. - <- database, table create');
     }).catch((err) => {

@@ -11,7 +11,6 @@ POST /api/auth/register
 
 export const register = async ctx => {
 
-
 };
 
 export const login = async ctx => {
