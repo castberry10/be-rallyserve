@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import cookie from 'koa-cookie';
+// import cookie from 'koa-cookie';
 import Koa from 'koa';
 import Router from 'koa-router';
 import api from './api/index.js';
@@ -23,7 +23,7 @@ app.use(bodyParser());
 // app.use(cookie());
 db.sequelize.sync({ force: true })
     .then(() => {
-        console.log('데이터베이스 연결됨. - <- database, table create');
+        console.log('데이터베이스 연결됨.');
     }).catch((err) => {
         console.error(err);
     });
