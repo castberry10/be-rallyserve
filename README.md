@@ -7,7 +7,10 @@ react-native -> https://github.com/bb2002/rn-rallyserve
 ```
 PORT=
 MYSQL_HOST=
-MYSQL_DATABASE=
+MYSQL_DATABASE=rallyserve
 MYSQL_USER=
 MYSQL_PASSWORD=
+MYSQL_PORT=
+COOKIT_SECRET=onethreesixfive
+JWT_SECRET=LOVEONETHREESIXFIVE
 ```
