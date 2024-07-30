@@ -28,5 +28,8 @@ db.sequelize = sequelize;
 db.Member = Member;
 db.Gameification = Gameification;
 
+Member.init(sequelize);
+// Gameification.init(sequelize);
+
 // 모델 초기화 필요
 export default db;

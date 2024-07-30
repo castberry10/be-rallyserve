@@ -4,7 +4,7 @@ import Sequelize from 'sequelize';
 class Member extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
-            name: {
+            userid: {
                 type: Sequelize.STRING(20),
                 allowNull: false,
                 unique: true,

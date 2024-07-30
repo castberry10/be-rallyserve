@@ -1,4 +1,10 @@
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 import Joi from 'joi';
+import bcrypt from 'bcrypt';
+import Member from '../../models/member.js';
+
 // import User from '../../models/user';
 
 /*
@@ -8,18 +14,48 @@ POST /api/auth/register
   password: 'B'
 }
 */
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const register = async ctx => {
+  const { id, password } = ctx.request.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
 
+  try {
+    const member = await Member.create({ userid: id, password: hashedPassword });
+    const token = jwt.sign({ id: member.id }, JWT_SECRET, { expiresIn: '6h' });
+    ctx.body = { token };
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = { error: 'Registration failed', error };
+  }
 };
 
 export const login = async ctx => {
+  const { id, password } = ctx.request.body;
 
+  try {
+    const member = await Member.findOne({ where: { userid: id } });
+
+    if (member && await bcrypt.compare(password, member.password)) {
+      const token = jwt.sign({ id: member.id }, JWT_SECRET, { expiresIn: '6h' });
+      ctx.body = { token };
+    } else {
+      ctx.status = 401;
+      ctx.body = { error: 'Invalid credentials' };
+    }
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = { error: 'Login failed', error };
+  }
 };
+
+// export const check = async ctx => {
+//   ctx.body = { message: 'Logged out' };
+// };
 
 /*
 POST /api/auth/logout
 */
-// export const logout = async ctx => {
-
-// };
+export const logout = async ctx => {
+  ctx.body = { message: 'Logged out' };
+};
