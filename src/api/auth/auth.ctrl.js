@@ -25,8 +25,13 @@ export const register = async ctx => {
     const token = jwt.sign({ id: member.id }, JWT_SECRET, { expiresIn: '6h' });
     ctx.body = { token };
   } catch (error) {
-    ctx.status = 500;
-    ctx.body = { error: 'Registration failed', error };
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      ctx.status = 409;
+      ctx.body = { error: 'User ID already exists' };
+    } else {
+      ctx.status = 500;
+      ctx.body = { error: 'Registration failed', details: error.message };
+    }
   }
 };
 
