@@ -35,8 +35,8 @@ const port = PORT || 1365;
 if (NODE_ENV === 'production') {
   // 프로덕션 환경
   const options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/castberry.kr/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/castberry.kr/fullchain.pem')
+    key: fs.readFileSync('/home/castberry/ssl/privkey.pem'),
+    cert: fs.readFileSync('/home/castberry/ssl/fullchain.pem')
   };
   
   https.createServer(options, app.callback()).listen(port, () => {
