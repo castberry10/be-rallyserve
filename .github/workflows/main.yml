@@ -12,19 +12,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
 
     - name: Deploy and start the project
       env:
         API_PORT: ${{ secrets.API_PORT }}
         SSH_IP: ${{ secrets.SSH_IP }}
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         SSH_PORT: ${{ secrets.SSH_PORT }}
-        SSH_USER: ${{ secrets.SSH_USER }}
       run: |
-        ssh -o StrictHostKeyChecking=no -p $SSH_PORT castberry@$SSH_IP << 'EOF'
+        sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no -p $SSH_PORT castberry@$SSH_IP << 'EOF'
           cd /path/to/your/project
           git pull origin main
           npm install
