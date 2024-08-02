@@ -6,7 +6,7 @@ const api = new Router();
 api.use('/auth', auth.routes());
 
 api.get('/', ctx => {
-  ctx.body = 'hello "1365 world"';
+  ctx.body = 'hello 1365 world';
 });
 
 export default api;
