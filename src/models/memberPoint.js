@@ -19,7 +19,7 @@ class MemberPoint extends Sequelize.Model {
       },
     }, {
       sequelize,
-      timestamps: false,
+      timestamps: true,
       underscored: false,
       modelName: 'MemberPoint',
       tableName: 'memberPoints',
