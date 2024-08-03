@@ -18,7 +18,8 @@ const auth = async (ctx, next) => {
     }
   
     try {
-      jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      ctx.state.user = decoded; // 토큰에서 user 정보 추출
       await next();
     } catch (err) {
       ctx.status = 401;

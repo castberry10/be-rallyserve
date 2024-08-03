@@ -31,3 +31,5 @@ class Member extends Sequelize.Model {
         db.Member.hasMany(db.MemberStar, { foreignKey: 'memberId', sourceKey: 'id' });
     }
 };
+
+export default Member;
