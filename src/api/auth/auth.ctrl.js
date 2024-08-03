@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-dotenv.config();
-import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import Member from '../../models/member.js';
+
+dotenv.config();
 
 // import User from '../../models/user';
 

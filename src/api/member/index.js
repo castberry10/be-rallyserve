@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { getUserId, getPoint, getStar } from './memberService.js';
+import { getPoint, getStar, getUserId } from './memberService.js';
 
 /**
  * member 라우터
@@ -64,10 +64,10 @@ member.get('/all', (ctx) => {
   Promise.all([getUserId(ctx), getPoint(ctx), getStar(ctx)])
     .then(([userId, point, star]) => {
       ctx.body = {
-        "id": userId,
-        "point": point,
-        "star": star,
-        "ranking": -1, // TODO: Ranking 정보를 추가해야함
+        'id': userId,
+        'point': point,
+        'star': star,
+        'ranking': -1, // TODO: Ranking 정보를 추가해야함
       };
     })
     .catch(error => {

@@ -8,7 +8,7 @@ class MemberStar extends Sequelize.Model {
         allowNull: false,
         references: {
           model: 'members',
-          key: 'id'
+          key: 'id',
         },
         onDelete: 'CASCADE',
       },
@@ -25,13 +25,13 @@ class MemberStar extends Sequelize.Model {
       tableName: 'memberStars',
       paranoid: false,
       charset: 'utf8',
-      collate: 'utf8_general_ci'
+      collate: 'utf8_general_ci',
     });
   }
 
   static associate(db) {
     db.MemberStar.belongsTo(db.Member, { foreignKey: 'memberId', targetKey: 'id' });
   }
-};
+}
 
 export default MemberStar;

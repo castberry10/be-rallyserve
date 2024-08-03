@@ -8,7 +8,7 @@ class MemberPoint extends Sequelize.Model {
         allowNull: false,
         references: {
           model: 'members',
-          key: 'id'
+          key: 'id',
         },
         onDelete: 'CASCADE',
       },
@@ -25,13 +25,13 @@ class MemberPoint extends Sequelize.Model {
       tableName: 'memberPoints',
       paranoid: false,
       charset: 'utf8',
-      collate: 'utf8_general_ci'
+      collate: 'utf8_general_ci',
     });
   }
 
   static associate(db) {
     db.MemberPoint.belongsTo(db.Member, { foreignKey: 'memberId', targetKey: 'id' });
   }
-};
+}
 
 export default MemberPoint;

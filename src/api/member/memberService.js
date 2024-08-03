@@ -24,7 +24,7 @@ export const getUserId = (ctx) => {
       ctx.body = { error: 'Failed to get user information' };
       return Promise.reject(error);
     });
-}
+};
 
 /**
  * 유저의 포인트를 가져옴
@@ -48,7 +48,7 @@ export const getPoint = (ctx) => {
       ctx.body = { error: 'Failed to get point information' };
       return Promise.reject(error);
     });
-}
+};
 
 /**
  * 유저의 스타 갯수를 가져옴
@@ -72,4 +72,4 @@ export const getStar = (ctx) => {
       ctx.body = { error: 'Failed to get star information' };
       return Promise.reject(error);
     });
-}
+};
