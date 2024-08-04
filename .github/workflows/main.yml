@@ -26,6 +26,5 @@ jobs:
           cd /home/castberry/be-rallyserve
           git pull origin main
           npm install
-          # Find the process running on the API port and kill it
           pm2 restart rallyserve
         EOF
