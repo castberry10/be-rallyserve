@@ -17,7 +17,6 @@ jobs:
 
     - name: Deploy and start the project
       env:
-        API_PORT: ${{ secrets.API_PORT }}
         SSH_IP: ${{ secrets.SSH_IP }}
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         SSH_PORT: ${{ secrets.SSH_PORT }}
