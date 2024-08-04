@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { register, login } from './auth.ctrl.js'; // auth.ctrl 모듈 경로에 맞게 변경
+import { login, register } from './auth.ctrl.js'; // auth.ctrl 모듈 경로에 맞게 변경
 
 const auth = new Router();
 
