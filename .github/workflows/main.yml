@@ -27,10 +27,5 @@ jobs:
           git pull origin main
           npm install
           # Find the process running on the API port and kill it
-          PID=$(lsof -ti tcp:$API_PORT)
-          if [ ! -z "$PID" ]; then
-            kill -9 $PID
-          fi
-          nohup npm run start &
-          disown $!
+          pm2 restart rallyserve
         EOF

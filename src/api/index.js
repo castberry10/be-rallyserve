@@ -10,7 +10,7 @@ api.use('/auth', auth.routes());
 api.use('/member', authmiddleware, member.routes()); // member 라우트를 사용할 때 authmiddleware 미들웨어 적용
 
 api.get('/', ctx => {
-  ctx.body = 'hello 1365 world';
+  ctx.body = 'hello 1365 api world';
 });
 
 export default api;
