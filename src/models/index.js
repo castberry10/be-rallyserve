@@ -4,7 +4,7 @@ import { Sequelize } from 'sequelize';
 import Member from './member.js';
 import Gameification from './gamification.js';
 import dotenv from 'dotenv';
-
+import Volunteer from './volunteer.js';
 dotenv.config();
 const sequelize = new Sequelize(
   process.env.MYSQL_DATABASE,
@@ -28,9 +28,14 @@ const db = {};
 db.sequelize = sequelize;
 db.Member = Member;
 db.Gameification = Gameification;
+db.Volunteer = Volunteer;
 
 Member.init(sequelize);
+Volunteer.init(sequelize);
 // Gameification.init(sequelize);
 
+
+
+Volunteer.associate(db);
 // 모델 초기화 필요
 export default db;

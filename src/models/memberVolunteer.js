@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 
-class Volunteer extends Sequelize.Model {
+
+class MemberVolunteer extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
       title: { // 제목
@@ -28,6 +29,10 @@ class Volunteer extends Sequelize.Model {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
+      text: { // 설명
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
       weekday: { // 요일
         type: Sequelize.STRING(30),
         allowNull: false,
@@ -40,37 +45,20 @@ class Volunteer extends Sequelize.Model {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      url: { // 링크
-        type: Sequelize.STRING(300),
-        allowNull: false,
-      },
-      state: { // 모집 상태
-        type: Sequelize.STRING(10),
-        allowNull: false,
-      },
-      text: { // 설명
-        type: Sequelize.STRING(100),
-        allowNull: false,
-      },
-      condition: { // 참가 조건
-        type: Sequelize.STRING(100),
-        allowNull: false,
-      },
     }, {
       sequelize,
       timestamps: false,
       underscored: false,
-      modelName: 'Volunteer',
-      tableName: 'volunteers',
+      modelName: 'MemberVolunteer',
+      tableName: 'memberVolunteers',
       paranoid: false,
       charset: 'utf8',
       collate: 'utf8_general_ci',
     });
   }
-  static associate(db) {
 
+  static associate(db) {
   }
 }
 
-
-export default Volunteer;
+export default MemberVolunteer;
