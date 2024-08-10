@@ -6,7 +6,7 @@ class Volunteer extends Sequelize.Model {
       title: { // 제목
         type: Sequelize.STRING(20),
         allowNull: false,
-        unique: true,
+        // unique: true,
       },
       volunteerstartdate: { // 봉사 시작일
         type: Sequelize.DATE,
@@ -56,6 +56,19 @@ class Volunteer extends Sequelize.Model {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
+      volunteerorganization: { // 봉사 기관
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      category: { // 분류
+        type: Sequelize.STRING(20),
+        allowNull: false,
+      },
+      registrationauthority: { // 등록기관
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+
     }, {
       sequelize,
       timestamps: false,
