@@ -4,7 +4,7 @@ class Volunteer extends Sequelize.Model {
   static init(sequelize) {
     return super.init({
       title: { // 제목
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(200),
         allowNull: false,
         // unique: true,
       },
@@ -25,11 +25,11 @@ class Volunteer extends Sequelize.Model {
         allowNull: false,
       },
       location: { // 장소
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(150),
         allowNull: false,
       },
       weekday: { // 요일
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING(70),
         allowNull: false,
       },
       submitstartdate: { // 신청 시작일
@@ -45,11 +45,11 @@ class Volunteer extends Sequelize.Model {
         allowNull: false,
       },
       state: { // 모집 상태
-        type: Sequelize.STRING(10),
+        type: Sequelize.STRING(30),
         allowNull: false,
       },
       text: { // 설명
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(700),
         allowNull: false,
       },
       condition: { // 참가 조건
@@ -61,11 +61,11 @@ class Volunteer extends Sequelize.Model {
         allowNull: false,
       },
       category: { // 분류
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(30),
         allowNull: false,
       },
       registrationauthority: { // 등록기관
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(60),
         allowNull: false,
       },
 

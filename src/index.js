@@ -27,6 +27,10 @@ db.sequelize.sync({ force: false })
   console.error(err);
 });
 
+// 초회 더미 데이터 추가
+// import addVolunteer from './lib/fakeVolunteerInfo.js';
+// addVolunteer();
+
 // app 인스터스에 라우터 적용 
 app.use(router.routes()).use(router.allowedMethods());
 

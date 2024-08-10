@@ -18,11 +18,11 @@ const sequelize = new Sequelize(
   },
 );
 // console.log('sequelize: ', sequelize);
-console.log('process.env.MYSQL_DATABASE: ', process.env.MYSQL_DATABASE);
-console.log('process.env.MYSQL_USER: ', process.env.MYSQL_USER);
-console.log('process.env.MYSQL_PASSWORD: ', process.env.MYSQL_PASSWORD);
-console.log('process.env.MYSQL_HOST: ', process.env.MYSQL_HOST);
-console.log('process.env.MYSQL_PORT: ', process.env.MYSQL_PORT);
+// console.log('process.env.MYSQL_DATABASE: ', process.env.MYSQL_DATABASE);
+// console.log('process.env.MYSQL_USER: ', process.env.MYSQL_USER);
+// console.log('process.env.MYSQL_PASSWORD: ', process.env.MYSQL_PASSWORD);
+// console.log('process.env.MYSQL_HOST: ', process.env.MYSQL_HOST);
+// console.log('process.env.MYSQL_PORT: ', process.env.MYSQL_PORT);
 
 const db = {};
 db.sequelize = sequelize;
@@ -34,8 +34,5 @@ Member.init(sequelize);
 Volunteer.init(sequelize);
 // Gameification.init(sequelize);
 
-
-
-Volunteer.associate(db);
 // 모델 초기화 필요
 export default db;

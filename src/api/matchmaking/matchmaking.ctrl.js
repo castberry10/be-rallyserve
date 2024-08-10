@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 // import Matchmaking from '../../models/matchmaking';
-import Volunteer from '../../models/volunteer';
+import Volunteer from '../../models/volunteer.js';
 
 dotenv.config();
 import axios from 'axios';
@@ -22,24 +22,26 @@ export const index = async ctx => {
       messages: [
         {
           role: 'system',
-          content: '너는 운동, 식단, 잠관리를 해주는 앱의 어시스턴트야.'
+          content: '너는 봉사자와 봉사기관을 매칭해주는 챗봇이야.내가 봉사자의 정보와 봉사기관의 정보를 줄테니 매칭해줘',
         },
         {
           role: 'user',
           content: `
-            goal: ${JSON.stringify(goal)}
-            status: ${JSON.stringify(status)}
-            위의 goal과 status를 0부터 100까지의 점수로 변환해줘.
-            goal은 사용자가 지정한 목표를 나타내고, status는 사용자의 현재 상태를 나타내.
-            0은 아무것도 하지 않았거나 아무것도 달성하지 못했을 때, 100은 목표를 완벽하게 달성했을 때를 의미해.
-            칼로리가 너무 적거나 너무 커도, 자는 시간이 너무 적거나 너무 많아도 안돼.
-            운동은 얼마나 하든 괜찮아
-            프로그램에서 사용되는거니까 다른말은 하지말고 0부터 100까지의 정수로만 변환해줘.
+            유저 봉사 시작 가능 날짜: ${userStartDate}
+            유저 봉사 종료 날짜: ${userEndDate}
+            유저 봉사 시작 가능 시간: ${userStartTime}
+            유저 봉사 종료 시간: ${userEndTime}
+            유저 메모: ${userMemo}
+
+            아래서부터 봉사 정보 나열이야 
+            ${volunteers}
+            위 정보에서 가장 알맞은 봉사를 찾아줘
+            나에게 반환할때 {title: '봉사제목', id: id} 이런식으로 반환해줘
             `
         }
       ],
       max_tokens: 256,
-      temperature: 0.7, 
+      temperature: 0.3, 
     },
     {
       headers: {
@@ -49,7 +51,7 @@ export const index = async ctx => {
     }
   );
 
-
+  ctx.body = response.data.choices[0].message.content;
 };
 
 // const { id, password } = ctx.request.body;

@@ -1,8 +1,9 @@
+import Volunteer from "../models/volunteer.js";
 
 const addVolunteer = async () => {
-
+console.log('start addVolunteer');
 try {
-    const newVolunteer1 = await Volunteer.create({
+const newVolunteer1 = await Volunteer.create({
       title: '청라 화재관련 대피소 자원봉사자 모집 [청라해변공원캠핑장/오후2시~6시]',
       volunteerstartdate: '2024-08-10',
       volunteerenddate: '2024-08-27',
@@ -34,7 +35,7 @@ try {
    });
   console.log('New volunteer opportunity added:', newVolunteer1);
 
-  const newVolunteer2 = await Volunteer.create({
+const newVolunteer2 = await Volunteer.create({
     title: '우리보금자리 노인요양공동생활가정 자원봉사자를 모집합니다.',
     volunteerstartdate: '2024-05-11',
     volunteerenddate: '2024-08-10',
@@ -103,7 +104,7 @@ const newVolunteer4 = await Volunteer.create({
   category: '생활편의지원',
   registrationauthority: '광주광역시 동구',
 });
-console.log('New volunteer opportunity added:', newVolunteer4);
+    console.log('New volunteer opportunity added:', newVolunteer4);
 
   } catch (error) {
     console.error('Error adding new volunteer opportunity:', error);
@@ -111,3 +112,4 @@ console.log('New volunteer opportunity added:', newVolunteer4);
 
 };
               
+export default addVolunteer;
