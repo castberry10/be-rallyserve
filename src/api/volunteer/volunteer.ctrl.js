@@ -6,7 +6,7 @@ dotenv.config();
 
 export const getPosts = async ctx => {
     try {
-        const { category, time, date } = ctx.query;
+        const { category, time, date, id} = ctx.query;
 
         let volunteers = await Volunteer.findAll({ raw: true });
 
@@ -57,7 +57,9 @@ export const getPosts = async ctx => {
                 return inputTime >= startTime && inputTime <= endTime;
             });
         }
-
+        if(id){
+            volunteers = volunteers.filter(volunteer => volunteer.id == id);
+        }
         ctx.body = { volunteers };
     } catch (error) {
         console.error('Error fetching volunteers:', error);
