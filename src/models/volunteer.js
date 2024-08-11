@@ -41,7 +41,7 @@ class Volunteer extends Sequelize.Model {
         allowNull: false,
       },
       url: { // 링크
-        type: Sequelize.STRING(300),
+        type: Sequelize.STRING(400),
         allowNull: false,
       },
       state: { // 모집 상태
@@ -49,7 +49,7 @@ class Volunteer extends Sequelize.Model {
         allowNull: false,
       },
       text: { // 설명
-        type: Sequelize.STRING(700),
+        type: Sequelize.STRING(1500),
         allowNull: false,
       },
       condition: { // 참가 조건
