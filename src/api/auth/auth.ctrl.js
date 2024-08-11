@@ -24,8 +24,8 @@ export const register = async ctx => {
 
   try {
     const member = await Member.create({ userid: id, password: hashedPassword });
-    await MemberPoint.create({ memberId: member.id, points: 0 });
-    await MemberStar.create({ memberId: member.id, star: 0 });
+    await MemberPoint.create({ memberId: member.id, points: 0, message: '새로운 여정의 시작' });
+    await MemberStar.create({ memberId: member.id, star: 0, message: '새로운 여정의 시작' });
     const token = jwt.sign({ id: member.id }, JWT_SECRET, { expiresIn: '6h' });
     ctx.body = { token };
   } catch (error) {
