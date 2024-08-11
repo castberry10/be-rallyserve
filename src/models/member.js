@@ -29,6 +29,7 @@ class Member extends Sequelize.Model {
   static associate(db) {
     db.Member.hasMany(db.MemberPoint, { foreignKey: 'memberId', sourceKey: 'id' });
     db.Member.hasMany(db.MemberStar, { foreignKey: 'memberId', sourceKey: 'id' });
+    db.Member.hasOne(db.MemberInfo, { foreignKey: 'memberId', sourceKey: 'id' });
   }
 }
 
