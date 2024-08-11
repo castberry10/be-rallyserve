@@ -32,23 +32,24 @@ const db = {};
 Member.init(sequelize);
 MemberPoint.init(sequelize);
 MemberStar.init(sequelize);
+Volunteer.init(sequelize);
 
 // 모델을 db 객체에 추가
 db.sequelize = sequelize;
-
+db.Member = Member;
 db.MemberPoint = MemberPoint;
 db.MemberStar = MemberStar;
+db.Gameification = Gameification;
+db.Volunteer = Volunteer;
+// MemberInfo
 
 // 모델 간의 관계 설정
 Member.associate && Member.associate(db);
 MemberPoint.associate && MemberPoint.associate(db);
 MemberStar.associate && MemberStar.associate(db);
 
-db.Gameification = Gameification;
-db.Volunteer = Volunteer;
 
-Member.init(sequelize);
-Volunteer.init(sequelize);
+
 
 
 export default db;
