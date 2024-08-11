@@ -73,8 +73,8 @@ member.get('/all', (ctx) => {
     .then(([userId, point, star]) => {
       ctx.body = {
         'id': userId,
-        'point': point,
-        'star': star,
+        'point': point.sum,
+        'star': star.sum,
         'ranking': -1, // TODO: Ranking 정보를 추가해야함
       };
     })
