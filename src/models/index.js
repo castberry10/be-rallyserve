@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import MemberStar from './memberStar.js';
 import MemberPoint from './memberPoint.js';
 
+import Volunteer from './volunteer.js';
 dotenv.config();
 
 const sequelize = new Sequelize(
@@ -18,11 +19,12 @@ const sequelize = new Sequelize(
     },
 );
 
-console.log('process.env.MYSQL_DATABASE: ', process.env.MYSQL_DATABASE);
-console.log('process.env.MYSQL_USER: ', process.env.MYSQL_USER);
-console.log('process.env.MYSQL_PASSWORD: ', process.env.MYSQL_PASSWORD);
-console.log('process.env.MYSQL_HOST: ', process.env.MYSQL_HOST);
-console.log('process.env.MYSQL_PORT: ', process.env.MYSQL_PORT);
+// console.log('sequelize: ', sequelize);
+// console.log('process.env.MYSQL_DATABASE: ', process.env.MYSQL_DATABASE);
+// console.log('process.env.MYSQL_USER: ', process.env.MYSQL_USER);
+// console.log('process.env.MYSQL_PASSWORD: ', process.env.MYSQL_PASSWORD);
+// console.log('process.env.MYSQL_HOST: ', process.env.MYSQL_HOST);
+// console.log('process.env.MYSQL_PORT: ', process.env.MYSQL_PORT);
 
 const db = {};
 
@@ -33,7 +35,7 @@ MemberStar.init(sequelize);
 
 // 모델을 db 객체에 추가
 db.sequelize = sequelize;
-db.Member = Member;
+
 db.MemberPoint = MemberPoint;
 db.MemberStar = MemberStar;
 
@@ -41,5 +43,12 @@ db.MemberStar = MemberStar;
 Member.associate && Member.associate(db);
 MemberPoint.associate && MemberPoint.associate(db);
 MemberStar.associate && MemberStar.associate(db);
+
+db.Gameification = Gameification;
+db.Volunteer = Volunteer;
+
+Member.init(sequelize);
+Volunteer.init(sequelize);
+
 
 export default db;
