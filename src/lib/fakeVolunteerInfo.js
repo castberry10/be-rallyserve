@@ -3,7 +3,7 @@ import Volunteer from "../models/volunteer.js";
 const addVolunteer = async () => {
 console.log('start addVolunteer');
 try {
-const newVolunteer1 = await Volunteer.create({
+  const newVolunteer1 = await Volunteer.create({
       title: '청라 화재관련 대피소 자원봉사자 모집 [청라해변공원캠핑장/오후2시~6시]',
       volunteerstartdate: '2024-08-10',
       volunteerenddate: '2024-08-27',

@@ -10,7 +10,7 @@ api.use('/auth', auth.routes());
 
 api.use('/member', authmiddleware, member.routes()); // member 라우트를 사용할 때 authmiddleware 미들웨어 적용
 
-api.use('/matchmaking', authmiddleware, matchmaking.routes()); // member 라우트를 사용할 때 authmiddleware 미들웨어 적용
+api.use('/matchmaking', matchmaking.routes()); // member 라우트를 사용할 때 authmiddleware 미들웨어 적용
 
 api.use('/volunteer', volunteer.routes()); // member 라우트를 사용할 때 authmiddleware 미들웨어 적용
 api.get('/', ctx => {
