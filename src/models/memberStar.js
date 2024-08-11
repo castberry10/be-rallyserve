@@ -12,7 +12,7 @@ class MemberStar extends Sequelize.Model {
         },
         onDelete: 'CASCADE',
       },
-      Star: {
+      star: {
         type: Sequelize.INTEGER,
         allowNull: false,
         min: 0,

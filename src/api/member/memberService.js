@@ -1,29 +1,28 @@
 import Member from '../../models/member.js';
 import MemberPoint from '../../models/memberPoint.js';
 import MemberStar from '../../models/memberStar.js';
+import pointDTO from "../../dto/pointDTO.js";
+import HttpError from "../../exception/httpError.js";
+import starDTO from "../../dto/starDTO.js";
 
 /**
  * 유저의 아이디를 가져옴
  * @param ctx
  * @returns {Promise<Member | null>}
  */
-export const getUserId = (ctx) => {
-  const id = ctx.state.user.id;
-
-  return Member.findByPk(id)
-    .then(userId => {
-      if (!userId) {
-        ctx.status = 404;
-        ctx.body = { error: 'User not found' };
-        return Promise.reject(new Error('User not found'));
-      }
-      return userId.userid;
-    })
-    .catch(error => {
-      ctx.status = 500;
-      ctx.body = { error: 'Failed to get user information' };
-      return Promise.reject(error);
-    });
+export const getUserId = (id) => {
+    return Member.findByPk(id)
+        .then(userId => {
+            if (!userId) {
+                return Promise.reject(new HttpError(404, 'User not found'));
+            }
+            console.log('userId.userid: ', userId.userid)
+            return userId.userid;
+        })
+        .catch(error => {
+            console.log('error: ', error)
+            return Promise.reject(new HttpError('Failed to get user information', 500));
+        });
 };
 
 /**
@@ -31,23 +30,28 @@ export const getUserId = (ctx) => {
  * @param ctx
  * @returns {Promise<*>}
  */
-export const getPoint = (ctx) => {
-  const id = ctx.state.user.id;
+export const getPoint = (id) => {
+    return MemberPoint.findAll({where: {memberId: id}})
+        .then(points => {
 
-  return MemberPoint.findOne({ where: { memberId: id } })
-    .then(point => {
-      if (!point) {
-        ctx.status = 404;
-        ctx.body = { error: 'Point not found' };
-        return Promise.reject(new Error('Point not found'));
-      }
-      return point;
-    })
-    .catch(error => {
-      ctx.status = 500;
-      ctx.body = { error: 'Failed to get point information' };
-      return Promise.reject(error);
-    });
+            if (!points || points.length === 0) {
+                return Promise.reject(new HttpError(404, 'User point not found'));
+            }
+
+            const pointDTOs = points.map((p) => pointDTO(p));
+            const pointSum = pointDTOs.reduce((acc, cur) => {
+                return acc + cur.points;
+            }, 0);
+
+            return {
+                points: pointDTOs,
+                sum: pointSum
+            };
+        })
+        .catch(error => {
+            console.log('error: ', error)
+            return Promise.reject(new HttpError('Failed to get point information', 500));
+        });
 };
 
 /**
@@ -55,21 +59,25 @@ export const getPoint = (ctx) => {
  * @param ctx
  * @returns {Promise<*>}
  */
-export const getStar = (ctx) => {
-  const id = ctx.state.user.id;
+export const getStar = (id) => {
 
-  return MemberStar.findOne({ where: { memberId: id } })
-    .then(star => {
-      if (!star) {
-        ctx.status = 404;
-        ctx.body = { error: 'Star not found' };
-        return Promise.reject(new Error('Star not found'));
-      }
-      return star;
-    })
-    .catch(error => {
-      ctx.status = 500;
-      ctx.body = { error: 'Failed to get star information' };
-      return Promise.reject(error);
-    });
+    return MemberStar.findAll({where: {memberId: id}})
+        .then(star => {
+            if (!star) {
+                return Promise.reject(new HttpError(404, 'User star not found'));
+            }
+
+            const starDTOs = star.map((s) => starDTO(s));
+            const starSum = starDTOs.reduce((acc, cur) => {
+                return acc + cur.star;
+            }, 0);
+            return {
+                sum: starSum,
+                star: starDTOs
+            };
+        })
+        .catch(error => {
+            console.log('error: ', error)
+            return Promise.reject(new HttpError('Failed to get star information', 500));
+        });
 };
