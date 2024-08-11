@@ -20,6 +20,7 @@ member.get('/user_id', (ctx) => {
     .catch(error => {
       ctx.status = ctx.status || 500;
       ctx.body = { error: error.message };
+      console.log(error);
     });
 });
 
@@ -36,6 +37,7 @@ member.get('/point', (ctx) => {
     .catch(error => {
       ctx.status = ctx.status || 500;
       ctx.body = { error: error.message };
+      console.log(error);
     });
 });
 
@@ -52,6 +54,7 @@ member.get('/star', (ctx) => {
     .catch(error => {
       ctx.status = ctx.status || 500;
       ctx.body = { error: error.message };
+      console.log(error);
     });
 });
 
@@ -61,19 +64,28 @@ member.get('/star', (ctx) => {
  * @param ctx
  */
 member.get('/all', (ctx) => {
-  Promise.all([getUserId(ctx), getPoint(ctx), getStar(ctx)])
-    .then(([userId, point, star]) => {
-      ctx.body = {
-        'id': userId,
-        'point': point,
-        'star': star,
-        'ranking': -1, // TODO: Ranking 정보를 추가해야함
-      };
-    })
-    .catch(error => {
-      ctx.status = ctx.status || 500;
-      ctx.body = { error: error.message };
-    });
+  ctx.status = 200;
+  ctx.body = {
+    'id': 1,
+    'point': 100,
+    'star': 10,
+    'ranking': -1, // TODO: Ranking 정보를 추가해야함
+  };
+  // console.log('member/all');
+  // Promise.all([getUserId(ctx), getPoint(ctx), getStar(ctx)])
+  //   .then(([userId, point, star]) => {
+  //     ctx.body = {
+  //       'id': userId,
+  //       'point': point,
+  //       'star': star,
+  //       'ranking': -1, // TODO: Ranking 정보를 추가해야함
+  //     };
+  //   })
+  //   .catch(error => {
+  //     ctx.status = ctx.status || 500;
+  //     ctx.body = { error: error.message };
+  //     console.log(error);
+  //   });
 });
 
 export default member;

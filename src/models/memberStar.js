@@ -21,7 +21,7 @@ class MemberStar extends Sequelize.Model {
       sequelize,
       timestamps: true,
       underscored: false,
-      modelName: 'MemberStat',
+      modelName: 'MemberStar',
       tableName: 'memberStars',
       paranoid: false,
       charset: 'utf8',
