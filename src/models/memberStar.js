@@ -12,16 +12,20 @@ class MemberStar extends Sequelize.Model {
         },
         onDelete: 'CASCADE',
       },
-      Star: {
+      star: {
         type: Sequelize.INTEGER,
         allowNull: false,
         min: 0,
+      },
+      message: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
       },
     }, {
       sequelize,
       timestamps: true,
       underscored: false,
-      modelName: 'MemberStat',
+      modelName: 'MemberStar',
       tableName: 'memberStars',
       paranoid: false,
       charset: 'utf8',

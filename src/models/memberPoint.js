@@ -17,6 +17,10 @@ class MemberPoint extends Sequelize.Model {
         allowNull: false,
         min: 0,
       },
+      message: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
     }, {
       sequelize,
       timestamps: true,

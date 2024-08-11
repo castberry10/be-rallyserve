@@ -13,13 +13,16 @@ const member = new Router();
  * @param ctx
  */
 member.get('/user_id', (ctx) => {
-  getUserId(ctx)
+  const id = ctx.state.user.id;
+  return getUserId(id)
     .then(userId => {
+      ctx.status = 200;
       ctx.body = userId;
     })
     .catch(error => {
-      ctx.status = ctx.status || 500;
+      ctx.status = error.status || 500;
       ctx.body = { error: error.message };
+      console.log(error);
     });
 });
 
@@ -29,13 +32,15 @@ member.get('/user_id', (ctx) => {
  * @param ctx
  */
 member.get('/point', (ctx) => {
-  getPoint(ctx)
+  const id = ctx.state.user.id;
+  return getPoint(id)
     .then(point => {
       ctx.body = point;
     })
     .catch(error => {
-      ctx.status = ctx.status || 500;
+      ctx.status = error.status || 500;
       ctx.body = { error: error.message };
+      console.log(error);
     });
 });
 
@@ -45,13 +50,15 @@ member.get('/point', (ctx) => {
  * @param ctx
  */
 member.get('/star', (ctx) => {
-  getStar(ctx)
+  const id = ctx.state.user.id;
+  return getStar(id)
     .then(star => {
       ctx.body = star;
     })
     .catch(error => {
-      ctx.status = ctx.status || 500;
+      ctx.status = error.status || 500;
       ctx.body = { error: error.message };
+      console.log(error);
     });
 });
 
@@ -61,18 +68,20 @@ member.get('/star', (ctx) => {
  * @param ctx
  */
 member.get('/all', (ctx) => {
-  Promise.all([getUserId(ctx), getPoint(ctx), getStar(ctx)])
+  const id = ctx.state.user.id;
+  return Promise.all([getUserId(id), getPoint(id), getStar(id)])
     .then(([userId, point, star]) => {
       ctx.body = {
         'id': userId,
-        'point': point,
-        'star': star,
+        'point': point.sum,
+        'star': star.sum,
         'ranking': -1, // TODO: Ranking 정보를 추가해야함
       };
     })
     .catch(error => {
-      ctx.status = ctx.status || 500;
+      ctx.status = error.status || 500;
       ctx.body = { error: error.message };
+      console.log(error);
     });
 });
 
