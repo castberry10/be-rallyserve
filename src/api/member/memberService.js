@@ -30,7 +30,7 @@ const handleError = (error, defaultMessage, statusCode = 500) => {
  */
 export const starDTOvalid = (star) => {
     if (star.point != null) {
-        throw new HttpError(406, 'Invalid operation: A star object should not contain a point.');
+        throw new HttpError(400, 'Invalid operation: A star object should not contain a point.');
     }
     return star;
 };
@@ -43,7 +43,7 @@ export const starDTOvalid = (star) => {
  */
 export const pointDTOvalid = (point) => {
     if (point.star != null) {
-        throw new HttpError(406, 'Invalid operation: A point object should not contain a star.');
+        throw new HttpError(400, 'Invalid operation: A point object should not contain a star.');
     }
     return point;
 };
