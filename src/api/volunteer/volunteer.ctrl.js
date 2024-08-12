@@ -6,7 +6,7 @@ dotenv.config();
 
 export const getPosts = async ctx => {
     try {
-        const { category, time, date, id} = ctx.query;
+        const { category, time, date, id, location, search} = ctx.query;
 
         let volunteers = await Volunteer.findAll({ raw: true });
 
@@ -57,6 +57,22 @@ export const getPosts = async ctx => {
                 return inputTime >= startTime && inputTime <= endTime;
             });
         }
+        if (location) {
+            volunteers = volunteers.filter(volunteer => 
+                volunteer.location && volunteer.location.includes(location)
+            );
+        }
+
+        if (search) {
+            volunteers = volunteers.filter(volunteer => 
+                (volunteer.volunteerorganization && volunteer.volunteerorganization.includes(search)) ||
+                (volunteer.location && volunteer.location.includes(search)) ||
+                (volunteer.title && volunteer.title.includes(search)) ||
+                (volunteer.category && volunteer.category.includes(search)) ||
+                (volunteer.registrationauthority && volunteer.registrationauthority.includes(search))
+            );
+        }
+        
         if(id){
             volunteers = volunteers.filter(volunteer => volunteer.id == id);
         }
