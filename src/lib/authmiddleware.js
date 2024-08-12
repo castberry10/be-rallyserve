@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import HttpError from '../exception/httpError.js';
 
 dotenv.config();
 
@@ -23,12 +24,12 @@ const auth = async (ctx, next) => {
     ctx.state.user = decoded; // 토큰에서 user 정보 추출
     await next();
   } catch (err) {
+    console.error(err);
     if (err instanceof jwt.JsonWebTokenError) {
       ctx.status = 401;
       ctx.body = { message: 'Invalid token' };
     } else {
-      console.error(err);
-      ctx.status = 500;
+      ctx.status = err.status || 500;
       ctx.body = { message: 'Internal Server Error' };
     }
   }
