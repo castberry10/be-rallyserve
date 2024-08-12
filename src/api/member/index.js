@@ -1,5 +1,7 @@
 import Router from 'koa-router';
-import { getPoint, getStar, getUserId } from './memberService.js';
+import { addPoint, addStar, getPoint, getStar, getUserId } from './memberService.js';
+import pointDTO from '../../dto/pointDTO.js';
+import starDTO from '../../dto/starDTO.js';
 
 /**
  * member 라우터
@@ -79,6 +81,38 @@ member.get('/all', (ctx) => {
       };
     })
     .catch(error => {
+      ctx.status = error.status || 500;
+      ctx.body = { error: error.message };
+      console.log(error);
+    });
+});
+
+member.post('/point', (ctx) => {
+  const id = ctx.state.user.id;
+  const point = pointDTO(ctx.request.body);
+  return addPoint(id, point)
+    .then((body) => {
+      ctx.status = 200;
+      ctx.body = body;
+    })
+    .catch(error => {
+      ctx.status = error.status || 500;
+      ctx.body = { error: error.message };
+      console.log(error);
+    });
+});
+
+member.post('/star', (ctx) => {
+  const id = ctx.state.user.id;
+  console.log(id);
+  const star = starDTO(ctx.request.body);
+  return addStar(id, star)
+    .then((body) => {
+      ctx.status = 200;
+      ctx.body = body;
+    })
+    .catch(error => {
+      console.log(error);
       ctx.status = error.status || 500;
       ctx.body = { error: error.message };
       console.log(error);
