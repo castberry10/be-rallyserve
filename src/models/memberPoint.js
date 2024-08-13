@@ -11,6 +11,7 @@ class MemberPoint extends Sequelize.Model {
           key: 'id',
         },
         onDelete: 'CASCADE',
+        indexes: [{ unique: false, fields: ['memberId'] }],
       },
       point: {
         type: Sequelize.INTEGER,
