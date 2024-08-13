@@ -1,5 +1,15 @@
 import Router from 'koa-router';
-import { getPoint, getStar, getUserId } from './memberService.js';
+import {
+  addPoint,
+  addStar,
+  getPoint,
+  getStar,
+  getUserId,
+  updatePoint,
+  updateStar,
+  deletePoint,
+  deleteStar, pointDTOvalid, starDTOvalid,
+} from './memberService.js';
 
 /**
  * member 라우터
@@ -77,6 +87,126 @@ member.get('/all', (ctx) => {
         'star': star.sum,
         'ranking': -1, // TODO: Ranking 정보를 추가해야함
       };
+    })
+    .catch(error => {
+      ctx.status = error.status || 500;
+      ctx.body = { error: error.message };
+      console.log(error);
+    });
+});
+
+/**
+ * 사용자의 포인트를 추가함
+ * POST /member/point
+ * @param ctx
+ */
+member.post('/point', (ctx) => {
+  const id = ctx.state.user.id;
+  const point = ctx.request.body;
+  return addPoint(id, point)
+    .then((body) => {
+      ctx.status = 200;
+      ctx.body = body;
+    })
+    .catch(error => {
+      ctx.status = error.status || 500;
+      ctx.body = { error: error.message };
+      console.log(error);
+    });
+});
+
+/**
+ * 사용자의 포인트를 수정함
+ * PUT /member/point/:pointId
+ * @param ctx
+ */
+member.put('/point/:pointId', (ctx) => {
+  const id = ctx.state.user.id;
+  const pointId = ctx.params.pointId;
+  const point = ctx.request.body;
+  return updatePoint(id, pointId, point)
+    .then((body) => {
+      ctx.status = 200;
+      ctx.body = body;
+    })
+    .catch(error => {
+      ctx.status = error.status || 500;
+      ctx.body = { error: error.message };
+      console.log(error);
+    });
+});
+
+/**
+ * 사용자의 포인트를 삭제함
+ * DELETE /member/point/:pointId
+ * @param ctx
+ */
+member.delete('/point/:pointId', (ctx) => {
+  const id = ctx.state.user.id;
+  const pointId = ctx.params.pointId;
+  return deletePoint(id, pointId)
+    .then(() => {
+      ctx.status = 204;  // No Content
+    })
+    .catch(error => {
+      ctx.status = error.status || 500;
+      ctx.body = { error: error.message };
+      console.log(error);
+    });
+});
+
+/**
+ * 사용자의 스타를 추가함
+ * POST /member/star
+ * @param ctx
+ */
+member.post('/star', (ctx) => {
+  const id = ctx.state.user.id;
+  const star = ctx.request.body;
+  return addStar(id, star)
+    .then((body) => {
+      ctx.status = 200;
+      ctx.body = body;
+    })
+    .catch(error => {
+      ctx.status = error.status || 500;
+      ctx.body = { error: error.message };
+      console.log(error);
+    });
+});
+
+/**
+ * 사용자의 스타를 수정함
+ * PUT /member/star/:starId
+ * @param ctx
+ */
+member.put('/star/:starId', (ctx) => {
+  const id = ctx.state.user.id;
+  const starId = ctx.params.starId;
+  const star = ctx.request.body;
+  return updateStar(id, starId, star)
+    .then((body) => {
+      ctx.status = 200;
+      ctx.body = body;
+    })
+    .catch(error => {
+      ctx.status = error.status || 500;
+      ctx.body = { error: error.message };
+      console.log(error);
+    });
+});
+
+/**
+ * 사용자의 스타를 삭제함
+ * DELETE /member/star/:starId
+ * @param ctx
+ */
+member.delete('/star/:starId', (ctx) => {
+  const id = ctx.state.user.id;
+  const starId = ctx.params.starId;
+  return deleteStar(id, starId)
+    .then(() => {
+      ctx.status = 204;  // No Content
     })
     .catch(error => {
       ctx.status = error.status || 500;

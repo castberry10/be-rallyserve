@@ -12,7 +12,7 @@ class MemberPoint extends Sequelize.Model {
         },
         onDelete: 'CASCADE',
       },
-      points: {
+      point: {
         type: Sequelize.INTEGER,
         allowNull: false,
         min: 0,
