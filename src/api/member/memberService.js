@@ -5,22 +5,8 @@ import pointDTO from '../../dto/pointDTO.js';
 import HttpError from '../../exception/httpError.js';
 import starDTO from '../../dto/starDTO.js';
 import { ValidationError } from 'sequelize';
+import handleError from '../../utill/handleError.js';
 
-/**
- * 공통 에러 핸들링 함수
- * @param {Error} error
- * @param {string} defaultMessage
- * @param {number} [statusCode=500]
- * @returns {Promise<never>}
- */
-const handleError = (error, defaultMessage, statusCode = 500) => {
-    console.error('error: ', error);
-    if (error instanceof HttpError) {
-        return Promise.reject(error);
-    } else {
-        return Promise.reject(new HttpError(statusCode, `${defaultMessage}: ${error.message}`));
-    }
-};
 
 /**
  * starDTO가 올바른지 검증하는 함수
@@ -54,13 +40,24 @@ export const pointDTOvalid = (point) => {
  * @returns {Promise<Member>}
  * @throws {HttpError} 사용자가 존재하지 않을 때
  */
-const getMemberById = async (id) => {
+export const getMemberById = async (id) => {
     const user = await Member.findByPk(id);
     if (!user) {
         throw new HttpError(404, 'User not found');
     }
     return user;
 };
+
+/**
+ * 사용자가 존재하는지 확인하는 함수
+ * 존제하지 않을 경우 HttpError(404)를 발생시킴,
+ * 반환값은 없다.
+ * @param id
+ * @returns {Promise<void>}
+ */
+export const checkMemberIsExist = async (id) => {
+    await getMemberById(id);
+}
 
 /**
  * 유저의 아이디를 가져오는 함수
