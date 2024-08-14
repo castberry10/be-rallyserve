@@ -5,7 +5,8 @@ export function rankDTO(rank) {
         rank: rank.rank,
         memberId: rank.memberId,
         userId: rank.userId,
-        totalPoints: rank.totalPoints,
+        total: rank.total,
+        type: rank.type,
     }
 }
 export default rankDTO;

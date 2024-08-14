@@ -11,6 +11,7 @@ class MemberStar extends Sequelize.Model {
           key: 'id',
         },
         onDelete: 'CASCADE',
+        indexes: [{ unique: false, fields: ['memberId'] }],
       },
       star: {
         type: Sequelize.INTEGER,
