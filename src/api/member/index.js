@@ -10,6 +10,7 @@ import {
   deletePoint,
   deleteStar, pointDTOvalid, starDTOvalid,
 } from './memberService.js';
+import {getUserRanking} from "../ranking/rankingService.js";
 
 /**
  * member 라우터
@@ -79,14 +80,15 @@ member.get('/star', (ctx) => {
  */
 member.get('/all', (ctx) => {
   const id = ctx.state.user.id;
-  return Promise.all([getUserId(id), getPoint(id), getStar(id)])
-    .then(([userId, point, star]) => {
+  return Promise.all([getUserId(id), getPoint(id), getStar(id), getUserRanking(id)])
+    .then(([userId, point, star, rank]) => {
       ctx.body = {
         'id': userId,
         'point': point.sum,
         'star': star.sum,
-        'ranking': -1, // TODO: Ranking 정보를 추가해야함
+        'ranking': rank.rank,
       };
+      console.log(rank)
     })
     .catch(error => {
       ctx.status = error.status || 500;

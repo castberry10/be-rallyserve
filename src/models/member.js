@@ -16,7 +16,6 @@ class Member extends Sequelize.Model {
       },
     }, {
       sequelize,
-      timestamps: false,
       underscored: false,
       modelName: 'Member',
       tableName: 'members',

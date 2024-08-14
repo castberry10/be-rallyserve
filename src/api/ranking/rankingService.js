@@ -4,7 +4,6 @@ import { checkMemberIsExist, getUserId } from '../member/memberService.js';
 import handleError from '../../utill/handleError.js';
 import rankDTO from '../../dto/rankDTO.js';
 
-
 /**
  * 전체 사용자들의 포인트 합을 기준으로 랭킹을 가져옵니다.
  * 동점자들은 같은 순위를 가지며, 순위는 1부터 시작합니다.
@@ -22,10 +21,9 @@ export const getOverallRanking = async () => {
             raw: true,
         });
 
-        // 랭킹 계산
         let currentRank = 1;
         let previousPoints = null;
-        const rankings = memberPointSums.map((member, index) => {
+        const rankings = await Promise.all(memberPointSums.map(async (member, index) => {
             if (previousPoints !== member.totalPoints) {
                 currentRank = index + 1;
             }
@@ -33,16 +31,15 @@ export const getOverallRanking = async () => {
             return rankDTO({
                 rank: currentRank,
                 memberId: member.memberId,
-                userId: getUserId(member.memberId),
+                userId: await getUserId(member.memberId),
                 totalPoints: member.totalPoints,
             });
-        });
+        }));
 
         return rankings;
     } catch (error) {
         return handleError(error, 'Failed to get overall ranking');
     }
-
 };
 
 /**
@@ -53,7 +50,9 @@ export const getOverallRanking = async () => {
  */
 export const getUserRanking = async (memberId) => {
     try {
-        const userPoints = await MemberPoint.findOne({
+        await checkMemberIsExist(memberId);
+
+        const userPointsResult = await MemberPoint.findOne({
             attributes: [
                 [fn('SUM', col('point')), 'totalPoints'],
             ],
@@ -62,19 +61,29 @@ export const getUserRanking = async (memberId) => {
             raw: true,
         });
 
-        await checkMemberIsExist(memberId);
+        if (!userPointsResult) {
+            throw new Error('User points not found');
+        }
 
-        const samePointsCount = await MemberPoint.count({
-            attributes: ['memberId'],
+        const userPoints = userPointsResult.totalPoints;
+
+        const samePointsCountResult = await MemberPoint.findAll({
+            attributes: [
+                [fn('SUM', col('point')), 'totalPoints'],
+            ],
             group: ['memberId'],
-            having: literal(`SUM(point) > ${userPoints.totalPoints}`),
+            having: literal(`SUM(point) >= ${userPoints}`),
+            raw: true,
         });
 
+        const samePointsCount = samePointsCountResult.length;
+        const rank = samePointsCount - samePointsCountResult.findIndex(user => user.memberId === memberId);
+
         return rankDTO({
-            rank: samePointsCount + 1,
+            rank,
             memberId: memberId,
             userId: await getUserId(memberId),
-            totalPoints: userPoints.totalPoints,
+            totalPoints: userPoints,
         });
     } catch (error) {
         return handleError(error, 'Failed to get user ranking');
