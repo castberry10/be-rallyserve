@@ -10,7 +10,7 @@ import {
   deletePoint,
   deleteStar, pointDTOvalid, starDTOvalid,
 } from './memberService.js';
-import {getUserRanking} from "../ranking/rankingService.js";
+import {getUserRankingByPoint} from "../ranking/rankingService.js";
 
 /**
  * member 라우터
@@ -80,7 +80,7 @@ member.get('/star', (ctx) => {
  */
 member.get('/all', (ctx) => {
   const id = ctx.state.user.id;
-  return Promise.all([getUserId(id), getPoint(id), getStar(id), getUserRanking(id)])
+  return Promise.all([getUserId(id), getPoint(id), getStar(id), getUserRankingByPoint(id)])
     .then(([userId, point, star, rank]) => {
       ctx.body = {
         'id': userId,

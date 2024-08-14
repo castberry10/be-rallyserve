@@ -9,7 +9,7 @@ import rankDTO from '../../dto/rankDTO.js';
  * 동점자들은 같은 순위를 가지며, 순위는 1부터 시작합니다.
  * @returns {Promise<Array>} - 랭킹 리스트
  */
-export const getOverallRanking = async () => {
+export const getOverallRankingByPoint = async () => {
     try {
         const memberPointSums = await MemberPoint.findAll({
             attributes: [
@@ -48,7 +48,7 @@ export const getOverallRanking = async () => {
  * @param {number} memberId - 랭킹을 확인할 사용자 ID
  * @returns {Promise<Object>} - 사용자 랭킹 정보
  */
-export const getUserRanking = async (memberId) => {
+export const getUserRankingByPoint = async (memberId) => {
     try {
         await checkMemberIsExist(memberId);
 
@@ -76,7 +76,7 @@ export const getUserRanking = async (memberId) => {
             raw: true,
         });
 
-        const samePointsCount = samePointsCountResult.length;
+        const samePointsCount = samePointsCountResult.length-1;
         const rank = samePointsCount - samePointsCountResult.findIndex(user => user.memberId === memberId);
 
         return rankDTO({
@@ -89,3 +89,4 @@ export const getUserRanking = async (memberId) => {
         return handleError(error, 'Failed to get user ranking');
     }
 };
+
