@@ -54,7 +54,7 @@ module.exports = {
         const date = getRandomDate(2022);
         return {
           userid: name,
-          password: await hashPassword('1111'),
+          password: await hashPassword(process.env.PRE_USER_PASSWORD),
           createdAt: date,
           updatedAt: date,
         };
