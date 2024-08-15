@@ -4,11 +4,14 @@ import member from './member/index.js';
 import authmiddleware from '../lib/authmiddleware.js';
 import matchmaking from './matchmaking/index.js';
 import volunteer from './volunteer/index.js';
+import ranking from './ranking/index.js';
 const api = new Router();
 
 api.use('/auth', auth.routes());
 
 api.use('/member', authmiddleware, member.routes()); // member 라우트를 사용할 때 authmiddleware 미들웨어 적용
+
+api.use('/ranking', ranking.routes());
 
 api.use('/matchmaking', matchmaking.routes()); // member 라우트를 사용할 때 authmiddleware 미들웨어 적용
 
